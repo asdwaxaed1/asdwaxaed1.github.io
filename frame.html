@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html lang="da">
+	<head>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<script id="pixi" src="https://cdn.jsdelivr.net/pixi.js/4.5.1/pixi.min.js"></script>
+		<script>
+"use strict";
+
+let run = false;
+window.addEventListener("message", function(e) {
+	if (!run) {
+		eval(e.data);
+		run = true;
+	}
+});
+
+parent.postMessage(null, "*");
+		</script>
+	</body>
+</html>
+

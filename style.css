@@ -1,0 +1,73 @@
+body {
+	background-color: #111121;
+}
+
+#overskrift {
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 2em;
+	position: absolute;
+	top: 5vh;
+	width: 100%;
+	text-align: center;
+	color: #206F4F;
+}
+
+#editor {
+	position: absolute;
+	top: calc(15%);
+	left: calc(49vw - 60vh);
+	height: 60vh;
+	width: 60vh;
+}
+
+#canvas {
+	position: absolute;
+	top: calc(15%);
+	left: calc(51vw);
+	height: 60vh;
+	width: 60vh;
+}
+
+canvas {
+	top: 0;
+	width: 99%;
+	height: 99%;
+}
+
+#error {
+	position: absolute;
+	top: calc(13% + 2px);
+	left: calc(51vw);
+	height: 60vh;
+	width: 60vh;
+	color: #FF5050;
+	background-color: #500000;
+	font-family: sans-serif;
+	font-size: 1em;
+}
+
+#button {
+	position: absolute;
+	top: calc(15% + 60vh + 1px);
+	left: calc(49vw - 60vh);
+}
+
+#tekst {
+	position: absolute;
+	top: calc(15% + 60vh + 10% + 1.8em);
+	width: 100%;
+	background-color: #111151;
+}
+
+#tekst p, li {
+	margin-left: calc(49vw - 60vh);
+	margin-right: 20%;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+	line-height: 140%;
+	font-size: 1em;
+	color: #206F4F;
+}
+
+a {
+	color: #20FFFF;
+}

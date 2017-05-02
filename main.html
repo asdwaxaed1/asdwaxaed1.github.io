@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="da">
+	<head>
+		<title>Lær programmering!</title>
+		<meta charset="UTF-8"/>
+		<link rel="stylesheet" href="style.css">
+	</head>
+	<body>
+		<iframe id="canvas" src="frame.html"></iframe>
+		<div id="overskrift">
+			Du er fremtidens programmør
+		</div>
+		<div id="editor"></div>
+		<button id="button" onclick="Reset()">Brug kode</button>
+		<div id="tekst">
+			<p>
+				Danmark mangler programmører, faktisk mangler der så mange, at <a href="http://www.business.dk/digital/danmark-vil-mangle-19.000-it-folk-i-2030">42,9% af IT-virksomheder har udskudt videreudvikling og innovation, fordi de mangler folk.</a> <br/>
+				Men programmering er ikke så svært, som man ville tro. Kig f.eks. på spillet ovenover. <br/>
+				Danmark har brug for dig og dine kompetencer, så vælg programmering som din karriere! <br/>
+			</p>
+			<ul>
+				<li>
+					Hvis du er en folkeskoleelev, så vælg en gymnasial uddannelse med programmering som fag. Du vil have højere chancer på HTX end HHX og STX.
+				</li>
+				<li>
+					Hvis du er en gymnasieelev, kan du tage en af de mange uddannelser tilgængelige, <a href="https://www.ug.dk/search/all_elements?f%5B0%5D=field_educational_interest%3A534&f%5B1%5D=search_tabs%3AVidereg%C3%A5ende%20uddannelse&maalgrp=408">kig her</a>.
+				</li>
+				<li>
+					Hvis du allerede har en uddannelse, kan du tage en om igen, eller bruge en af de mange online hjemmesider til at lære det, e.g.
+					<ul>
+						<li>
+							<a href="https://www.codeschool.com/">Code School</a>
+						</li>
+						<li>
+							<a href="https://www.codecademy.com/">codecademy</a>
+						</li>
+						<li>
+							<a href="https://www.tutorialspoint.com/">tutorialspoint</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+			<p>
+				Du kan finde mere information på <a href="https://www.ug.dk/">Uddannelsesguiden</a> og <a href="http://uvm.dk/">undervisningsministeriets hjemmeside</a>.
+			</p>
+			<p>
+				Spillet blev lavet med hjælp af PixiJS, som har følgende betingelser og ophavsret: <a href="https://github.com/PolymerLabs/pixi-js/blob/master/LICENSE">licens</a>
+			</p>
+			<p>
+				Viseren af kildekoden er lavet med hjælp af Ace, som har følgende betingelser og ophavsret: <a href="https://github.com/ajaxorg/ace/blob/master/LICENSE">licens</a>
+			</p>
+		</div>
+		
+
+		<script src="https://cdn.jsdelivr.net/ace/1.2.6/min/ace.js"></script>
+		<script src="slange.js"></script>
+		<script>
+"use strict";
+let editor = ace.edit("editor");
+editor.$blockScrolling = Infinity;
+editor.setTheme("ace/theme/monokai");
+editor.getSession().setMode("ace/mode/javascript");
+editor.setValue(snake_js || "ERROR");
+
+let iframe;
+let error;
+
+function fjernCanvas() {
+	if (iframe) {
+		document.body.removeChild(iframe);
+		iframe = undefined;
+	}
+
+	if (error) {
+		document.body.removeChild(error);
+		error = undefined;
+	}
+}
+
+function visFejl(e) {
+	fjernCanvas();
+	
+	error = document.createElement("p");
+	error.id = "error";
+	error.appendChild(document.createTextNode("Fejl " + e.name + " ved linje " + (e.lineNumber || "[ikke tilgængeligt]") + ": " + (e.message || "[ikke tilgængeligt]")));
+	error.appendChild(document.createElement("br"));
+	if(e.stack) {
+		error.appendChild(document.createElement("br"));
+		error.appendChild(document.createTextNode("Funktionstråd:\n"));
+		error.appendChild(document.createElement("br"));
+		error.appendChild(document.createTextNode(e.stack));
+	}
+	document.body.appendChild(error);
+}
+
+window.addEventListener("error", function(e) {
+	visFejl(e.error);
+});
+
+window.addEventListener("message", function() {
+	if(iframe) {
+		try {
+			iframe.contentWindow.postMessage(editor.getValue(), "*");
+		} catch(e) {
+			visFejl(e);
+		}
+	} else {
+	}
+});
+
+function Reset() {
+	fjernCanvas();
+
+	iframe = document.createElement("iframe");
+	iframe.id = "canvas";
+	iframe.src = "frame.html";
+	document.body.appendChild(iframe);
+	let w = iframe.contentWindow;
+	let d = w.document;
+
+	w.addEventListener("error", function(e) {
+		visFejl(e.error);
+	});
+
+
+	w.addEventListener("mousedown", function(e) {
+		iframe.focus();
+	});
+}
+
+Reset();
+		</script>
+	</body>
+</html>
+
